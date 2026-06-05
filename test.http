@@ -1,0 +1,2 @@
+GET http://localhost:8080/products/paged?page=0&size=2
+Content-Type: application/json
