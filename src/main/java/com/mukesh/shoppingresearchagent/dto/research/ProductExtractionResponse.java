@@ -5,12 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductInfo {
-    private String name;
-    private Double price;
-    private String description;
-    private String category;
-
+@AllArgsConstructor
+public class ProductExtractionResponse {
+    private String productName;
 }

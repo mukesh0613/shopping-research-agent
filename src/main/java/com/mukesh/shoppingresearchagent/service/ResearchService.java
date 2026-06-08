@@ -1,27 +1,40 @@
 package com.mukesh.shoppingresearchagent.service;
 
+import com.mukesh.shoppingresearchagent.agent.ResearchTool;
+import com.mukesh.shoppingresearchagent.agent.ToolRegistry;
 import com.mukesh.shoppingresearchagent.dto.ResearchResponseDto;
-import com.mukesh.shoppingresearchagent.dto.research.ProductInfo;
+import com.mukesh.shoppingresearchagent.enums.ResearchIntent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ResearchService {
 
-    private final GroqService groqService;
-    private final PromptTemplateService promptTemplateService;
-    private final ProductSearchService productSearchService;
+    private final IntentRouterService intentRouterService;
 
-    public ResearchResponseDto research(String query){
-        List<ProductInfo> products;
-        products = productSearchService.searchProducts(query);
-        String prompt=promptTemplateService.buildShoppingPrompt(query,products);
-        System.out.println(prompt);
-        String report= groqService.generateContent(prompt);
+    private final ToolRegistry toolRegistry;
 
-        return new ResearchResponseDto(query, report);
+    public ResearchResponseDto research(
+            String query
+    ) {
+
+        ResearchIntent intent =
+                intentRouterService
+                        .detectIntent(query);
+
+        ResearchTool tool =
+                toolRegistry
+                        .getTool(
+                                intent.name()
+                        );
+
+        String report =
+                tool.execute(query);
+
+        return new ResearchResponseDto(
+                query,
+                report
+        );
     }
 }
