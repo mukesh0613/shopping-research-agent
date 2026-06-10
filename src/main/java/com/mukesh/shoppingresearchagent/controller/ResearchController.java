@@ -1,9 +1,8 @@
 package com.mukesh.shoppingresearchagent.controller;
 
-import com.mukesh.shoppingresearchagent.dto.ResearchRequestDto;
-import com.mukesh.shoppingresearchagent.dto.ResearchResponseDto;
-import com.mukesh.shoppingresearchagent.service.ResearchService;
-import jakarta.validation.Valid;
+import com.mukesh.shoppingresearchagent.agent.cordinator.ShoppingCoordinatorAgent;
+import com.mukesh.shoppingresearchagent.dto.ShoppingResearchRequest;
+import com.mukesh.shoppingresearchagent.dto.ShoppingResearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +10,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/research")
 @RequiredArgsConstructor
 public class ResearchController {
-    private final ResearchService researchService;
+
+    private final ShoppingCoordinatorAgent
+            shoppingCoordinatorAgent;
 
     @PostMapping
-    public ResearchResponseDto research(@Valid @RequestBody ResearchRequestDto request){
-        return researchService.research(request.getQuery());
+    public ShoppingResearchResponse research(
+
+            @RequestBody
+            ShoppingResearchRequest request
+
+    ) {
+
+        return shoppingCoordinatorAgent
+                .researchProduct(
+                        request.getQuery()
+                );
     }
 }

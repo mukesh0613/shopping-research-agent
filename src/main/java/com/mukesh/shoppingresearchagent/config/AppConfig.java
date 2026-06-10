@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-public class RestClientConfig {
+public class AppConfig {
+
     @Bean
-    public RestClient restClient(){
+    public RestClient restClient() {
+
         return RestClient.create();
     }
 }

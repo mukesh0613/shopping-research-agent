@@ -30,6 +30,10 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testAnnotationProcessor("org.projectlombok:lombok")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
+    implementation ("org.springframework.boot:spring-boot-starter-cache")
+    implementation ("com.github.ben-manes.caffeine:caffeine")
+    implementation ("org.springframework.retry:spring-retry")
+    implementation ("org.springframework.boot:spring-boot-starter-aop")
 }
 
 tasks.withType<Test> {
